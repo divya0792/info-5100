@@ -1,0 +1,103 @@
+Course Registration platform
+Student can
+1. login
+2. Search for a course
+3. Register for a course
+4. Drop a Course
+
+Professor can
+1. login
+2. Add a course
+3. Remove a course
+
+Platform features:
+1. see what courses are taught by a professor
+2. what courses a student have registered
+3. list students who have registered for a course
+4. Seats available in a course
+
+-------------------------------------------------------------
+ Class: Course
+ State: courseId, courseName, totalSeats , seatsAvailable, Schedule, ProfessorId
+--------------------------------------------------------------
+Class: Professor
+State: professorId, profName, courseIds
+----------------------------------------------------------------
+ Class: Student
+ State: studentId, studentName, coursesRegistered
+ Behaviour: , login, searchCourse
+---------------------------------------------------------------------
+Class: Login
+State: username, password, emailId, isProfessor
+Behaviour: isValid(username, password)
+
+---------------------------------------------------------------------
+Class: CourseRegistration
+State:
+Behaviour: register(courseId, studentId){
+    Course course = CourseService.getCourse(courseId)
+    Student student = StudentService.getStudent(studentId)
+    if(course.getSeatsAvailable >=1)
+        if(student.getCoursesRegistered.length == 3)
+            throw new Exception( "cannot register for more than 3 courses")
+        else
+            course.setSeatsAvailable(course.getSeatsAvailable()- 1)
+            student.setCoursesRegistered(student.getCoursesRegistered().add(courseId))
+            course.save()
+            student.save()
+
+    else
+       throw new Exception( "seats not available")
+
+
+}
+
+Behaviour: drop(courseId, studentId) {
+      Course course = CourseService.getCourse(courseId)
+      Student student = StudentService.getStudent(studentId)
+      course.setSeatsAvailable(course.getSeatsAvailable + 1)
+      student.setCoursesRegistered(student.getCoursesRegistered().remove(courseId))
+      student.save()
+      course.save()
+
+  }
+
+
+Behaviour: add(course, professorId){
+           //add course object to database
+            }
+
+Behaviour: remove(courseId){
+            // remove course entry from database
+            }
+
+---------------------------------------------------------------------------------
+Class: CourseSearch
+Behaviour: searchCourse(courseId, courseName, profName){
+    // student can search with any of the above parameter
+    List<Course> courses = getCourse(courseId, courseName, profName)
+    return courses
+}
+
+
+
+Student student
+Professor professor
+Course course
+Login login
+CourseRegistration courseRegistration
+CourseSearch courseSearch
+
+
+login.isValid(username, password)
+if(!login.isProfessor) // logged in by student
+    courseRegistration.register(studentId, courseId);
+    courseRegistration.drop(studentId, courseId)
+
+else
+    add(course, professorId)
+    remove(course)
+
+List<Course> courses = courseSearch.searchCourse(courseId, courseName, profName)
+// to be displayed in a table
+

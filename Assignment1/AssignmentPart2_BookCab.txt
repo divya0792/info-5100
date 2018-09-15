@@ -1,0 +1,93 @@
+Book a cab ride
+
+Traveller can
+1. Book a ride
+2. Cancel a ride
+3. Call Driver
+
+Driver can
+1. Reject a ride
+2. Call Traveller
+3. End a ride
+
+--------------------------------------------------------------
+Class: Location
+State: latitude, longitude, degrees
+------------------------------------------------------------------
+Class: Traveller
+State: travellerId, name, phonenumber, emailAddress, isRideOn, creditCardDetails
+Behaviour: bookARide(destination){
+    Location currentLocation = GPS.getCurrentLocation()
+        Driver, vehicle and fare details = CabServer.bookRide(currentLocation, destination, travellerId)
+}
+Behaviour: callDriver(driverId){
+        Driver driver = getDriverById(driverId);
+        makePhoneCall(driver.getPhoneNumber())
+}
+Behaviour: cancelARide(rideId){
+    //fetch driver details by rideId
+    CabServer.sendNotificationToDriver()
+    driver.isDriverBusy = false;
+}
+
+Behaviour: makePayment(){
+        PaymentService.makePayment(creditCardDetails, fare)
+}
+-------------------------------------------------------------------
+Class: Vehicle
+State: vehicleId, carNumber, model
+------------------------------------------------------------------------
+Class: Driver
+State: driverId, phonenumber, emailAddress, isDriverBusy, VehicleId
+Behaviour: endRide(rideId) {
+        CabServer.sendRequestToServer(rideId)
+        isDriverBusy = false;
+        //fetch customer
+        customer.makePayment()
+}
+
+Behaviour: sendRequest(){
+        // a driver can accept or reject a ride
+        return true or false
+    }
+----------------------------------------------------------------------------
+
+Class: CabServer
+Behaviour: bookARide(currentLocation, destination, travellerId){
+    fare = calculateFare(currentLocation, destination)
+    List<Driver> drivers = findNearbyDrivers(currentLocation)
+    Driver driver = sendRequestToDrivers(drivers)
+    Vehicle vehicle=  getVehicleByDriverId(driverId)
+    return vehicle, driver and fare
+}
+
+private Behaviour: calculateFare(currentLocation, destination){
+        calculate distance from currentLocation to destination
+        multiply by per mile fare
+        return fare;
+}
+private Behaviour: findNearbyDrivers(userLocation) {
+        // find nearby drivers based on userlocation and drivers current location
+        // filter drivers based on threshold distance( ex: within 2 miles)
+      return List<Driver> drivers
+}
+
+private Behaviour: sendRequestToDrivers(List<Driver> drivers){
+            for(i=0; i< drivers.length; i++){
+                isAccepted = driver.sendRequest(userLocation, destination, customerId)
+                if(isAccepted)
+                    return driver
+            }
+}
+
+-----------------------------------------------------------------------------------
+
+class: GPS
+Behaviour: Location getCurrentLocation(){
+        //get current location of caller
+        }
+}
+
+
+
+

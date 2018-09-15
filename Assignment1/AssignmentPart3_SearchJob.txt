@@ -1,0 +1,72 @@
+Job searching and Posting Platform
+
+Applicant can
+1. Search for a job with any parameter(position, salary, skills)
+2. Apply for jobs
+3. cancel application for a job
+
+Recruiter can
+1. Post jobs
+2. Remove jobs
+3. view and contact applicants who have applied for a job
+------------------------------------------------------------------------------
+
+Class: Applicant
+State: applicantId, applicantName, emailAddress, Resume, List of  job ids
+
+Class:Recruiter
+State: recruiterId, recruiterName, emailAddress, List of job ids
+
+Class:Job
+State: jobId, salary, position, keySkillsRequired, experienceRequired, companyName, recruiterId, list of applicantids
+
+Class: Resume
+State: applicantId, keySkills, currentSalary, experience
+
+Class: SearchJobs
+Behaviour: searchJobs(position, salary, experience, keyskills){
+    List<Job> searchedJobs = getJobs(position, salary, experience, keyskills)
+    return searchedJobs
+}
+
+Class: JobApplication
+Behaviour: apply(jobId, applicantId){
+       Applicant applicant = getApplicantById(applicantId)
+       applicant.addJob(jobId)
+       Job job = getJobById(jobId)
+       job.addApplicant(applicantId)
+       applicant.save()
+       job.save()
+
+}
+Behaviour: cancel(jobId, applicantId){
+        Applicant applicant = getApplicantById(applicantId)
+       applicant.removeJob(jobId)
+       Job job = getJobById(jobId)
+       job.removeApplicant(applicantId)
+       applicant.save()
+       job.save()
+}
+
+Behaviour: post(job, recruiterId){
+        //add job to database and generate jobId
+         Recruiter recruiter = getRecruiterById(recruiterId)
+         recruiter.addJob(jobId)
+          recruiter.save()
+          sendEmailToRecruiter()
+}
+
+Behaviour: remove(job){
+        //remove job from database
+        Recruiter recruiter = getRecruiterById(recruiterId)
+        recruiter.removeJob(jobId)
+        recruiter.save()
+        sendEmailToRecruiter()
+}
+
+Behaviour: viewApplicants(jobId){
+        Job job = getJobById(jobId);
+        List<Applicant> applicants = job.getApplicants
+}
+
+

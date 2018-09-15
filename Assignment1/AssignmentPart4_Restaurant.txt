@@ -1,0 +1,109 @@
+Order Food from a restaurant
+Customer can
+1. Login
+2. Browse Food Items
+3. Add foodItems to cart
+4. Place Order and pay
+5. Cancel order
+
+Restaurant Owner can
+1. Login
+2. see orders
+3. update order
+4. Add/remove food items
+-------------------------------------------------------------
+
+Class: Customer
+State: customerId, name, address, phoneNumber, emailAddress, creditCardDetails
+----------------------------------------------------------------
+Class: Owner
+State: name, phoneNumber, emailAddress
+-----------------------------------------------------------------
+Class: FoodItem
+State: itemId, name, price, type
+------------------------------------------------------------------
+Class: Login
+State: username, password, emailId, isOwner
+Behaviour: isValid(username, password)
+-------------------------------------------------------------------
+Class: Cart
+State: customerId, Map<itemId, quantity> items
+--------------------------------------------------------------------
+Class: ViewFoodItems
+Behaviour: showAllFoodItems(){
+    List<FoodItems> foodItems = getFoodItems()
+    // get all food items from database
+    return foodItems
+}
+-------------------------------------------------------------------------
+Class: FoodService
+Behaviour: addToCart(itemId, customerId, quantity){
+    Cart cart = getCartByCustomerId(customerId)
+    cart.addItem(itemId, quantity)
+    cart.save()
+}
+Behaviour: removeFromCart(itemId, customerId) {
+     Cart cart = getCartByCustomerId(customerId)
+     cart.removeItem(itemId, quantity)
+     cart.save()
+}
+Behaviour: placeOrder(customerId){
+      Cart cart = getCartByCustomerId(customerId)
+      price = calculatePrice(cart)
+      isSuccessful = PaymentService.makePayment(price, CustomerId)
+      if(isSuccessful){
+        //send confirmation email to customer and owner
+        printReceipt
+        notifyToOwner
+      }
+      else
+          throw new Exception("Payment Error")
+
+}
+Private behaviour: calculatePrice(cart){
+       Map<ItemId, quantity> orderedItems = cart.getFoodItems()
+       totalPrice=0
+       for(i = 0; i< orderedItems.length; i++) {
+            //fetch item id and quantity from map
+            FoodItem foodItem = getFoodItemById(ItemId);
+            totalPrice += foodItem.getPrice() * quantity
+       }
+       return totalPrice;
+}
+Behaviour: cancelOrder(customerId){
+        // notifyToOwner
+        PaymentService.initiateRefund(customerId)
+}
+
+Behaviour: addItem(FoodItem foodItem){
+        //add fooditem to database
+}
+
+Behaviour: removeItem(itemId){
+           //remove fooditem from database
+}
+
+------------------------------------------------------------------------
+Login login
+Customer customer
+Owner owner
+ViewFoodItems viewFoodItems
+FoodService foodService
+FoodItem foodItem
+
+if(login.isValid())
+    if(!login.isOwner)
+        List<FoodItem> foodItems = viewFoodItems.showAllFoodItems()
+        //display fooditems in table
+        foodService.addToCart(itemId, customerId, quantity)
+        foodService.removeFromCart(itemId, customerId)
+        foodService.placeOrder(customerId)
+
+     else
+        foodService.addItem(foodItem)
+        foodService.remove(itemId)
+
+
+
+
+
