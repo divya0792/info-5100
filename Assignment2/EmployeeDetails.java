@@ -73,7 +73,7 @@ class Employee implements Comparable<Employee> {
     }
 
     public void raiseSalary(double byPercent) {
-        setSalary(byPercent * getSalary() / 100);
+        setSalary(byPercent * getSalary() / 100.0);
     }
 
     public void swap(Employee otherEmployee) {
