@@ -1,5 +1,5 @@
 package People;
-
+// score 5/5
 public class Psychiatrist {
 
     public void examine(Moody moody) {
