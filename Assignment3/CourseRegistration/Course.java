@@ -1,5 +1,5 @@
 package CourseRegistration;
-
+// score 5/5
 public class Course {
 
     private final String name;
