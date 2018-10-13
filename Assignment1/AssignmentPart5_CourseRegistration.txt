@@ -1,9 +1,9 @@
-Course Registration platform
-Student can
+CourseRegistration.CourseRegistration.Course Registration platform
+CourseRegistration.Student can
 1. login
 2. Search for a course
 3. Register for a course
-4. Drop a Course
+4. Drop a CourseRegistration.CourseRegistration.Course
 
 Professor can
 1. login
@@ -17,13 +17,13 @@ Platform features:
 4. Seats available in a course
 
 -------------------------------------------------------------
- Class: Course
+ Class: CourseRegistration.CourseRegistration.Course
  State: courseId, courseName, totalSeats , seatsAvailable, Schedule, ProfessorId
 --------------------------------------------------------------
 Class: Professor
 State: professorId, profName, courseIds
 ----------------------------------------------------------------
- Class: Student
+ Class: CourseRegistration.Student
  State: studentId, studentName, coursesRegistered
  Behaviour: , login, searchCourse
 ---------------------------------------------------------------------
@@ -32,11 +32,11 @@ State: username, password, emailId, isProfessor
 Behaviour: isValid(username, password)
 
 ---------------------------------------------------------------------
-Class: CourseRegistration
+Class: CourseRegistration.CourseRegistration
 State:
 Behaviour: register(courseId, studentId){
-    Course course = CourseService.getCourse(courseId)
-    Student student = StudentService.getStudent(studentId)
+    CourseRegistration.CourseRegistration.Course course = CourseService.getCourse(courseId)
+    CourseRegistration.Student student = StudentService.getStudent(studentId)
     if(course.getSeatsAvailable >=1)
         if(student.getCoursesRegistered.length == 3)
             throw new Exception( "cannot register for more than 3 courses")
@@ -53,8 +53,8 @@ Behaviour: register(courseId, studentId){
 }
 
 Behaviour: drop(courseId, studentId) {
-      Course course = CourseService.getCourse(courseId)
-      Student student = StudentService.getStudent(studentId)
+      CourseRegistration.CourseRegistration.Course course = CourseService.getCourse(courseId)
+      CourseRegistration.Student student = StudentService.getStudent(studentId)
       course.setSeatsAvailable(course.getSeatsAvailable + 1)
       student.setCoursesRegistered(student.getCoursesRegistered().remove(courseId))
       student.save()
@@ -75,17 +75,17 @@ Behaviour: remove(courseId){
 Class: CourseSearch
 Behaviour: searchCourse(courseId, courseName, profName){
     // student can search with any of the above parameter
-    List<Course> courses = getCourse(courseId, courseName, profName)
+    List<CourseRegistration.CourseRegistration.Course> courses = getCourse(courseId, courseName, profName)
     return courses
 }
 
 
 
-Student student
+CourseRegistration.Student student
 Professor professor
-Course course
+CourseRegistration.CourseRegistration.Course course
 Login login
-CourseRegistration courseRegistration
+CourseRegistration.CourseRegistration courseRegistration
 CourseSearch courseSearch
 
 
@@ -98,6 +98,6 @@ else
     add(course, professorId)
     remove(course)
 
-List<Course> courses = courseSearch.searchCourse(courseId, courseName, profName)
+List<CourseRegistration.CourseRegistration.Course> courses = courseSearch.searchCourse(courseId, courseName, profName)
 // to be displayed in a table
 
