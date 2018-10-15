@@ -159,7 +159,12 @@ public class Assignment4 {
   								  [9,6,3] ],
      */
     public int[][] rotate(int[][] matrix) {
-
+        if(matrix == null) {
+            throw new IllegalArgumentException("matrix is null");
+        }
+        if(matrix.length == 1) {
+            return matrix;
+        }
         int i = 0;
         int j = 0;
         int matrixLimit = matrix.length - 1;
