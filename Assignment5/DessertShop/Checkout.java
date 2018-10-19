@@ -48,29 +48,28 @@ class Checkout {
         bill.append("    " + DessertShoppe.STORE_NAME + "\n");
         bill.append("    " + "------------------" + "\n");
 
-        for(int j = 0; j < dessertItems.size(); j++) {
+        for (DessertItem dessertItem : dessertItems) {
 
-            StringBuilder dessert = new StringBuilder(dessertItems.get(j).getName());
-            String dessertCost = DessertShoppe.cents2dollarsAndCents(dessertItems.get(j).getCost());
+            StringBuilder dessert = new StringBuilder(dessertItem.getName());
+            String dessertCost = DessertShoppe.cents2dollarsAndCents(dessertItem.getCost());
 
             if (dessertCost.length() > DessertShoppe.COST_WIDTH) {
                 dessertCost = dessertCost.substring(0, DessertShoppe.COST_WIDTH);
             }
 
-
-            if (dessertItems.get(j) instanceof Candy) {
-                bill.append(((Candy) dessertItems.get(j)).getWeight()).append(" lbs @ ").append(DessertShoppe.cents2dollarsAndCents(((Candy) dessertItems.get(j)).getPricePerPound())).append(" /lb.\n");
+            if (dessertItem instanceof Candy) {
+                bill.append(((Candy) dessertItem).getWeight()).append(" lbs @ ").append(DessertShoppe.cents2dollarsAndCents(((Candy) dessertItem).getPricePerPound())).append(" /lb.\n");
                 generateBillString(dessert, dessertCost, bill);
 
-            } else if (dessertItems.get(j) instanceof IceCream) {
+            } else if (dessertItem instanceof IceCream) {
                 generateBillString(dessert, dessertCost, bill);
 
-            } else if (dessertItems.get(j) instanceof Sundae) {
-                bill.append(((Sundae) dessertItems.get(j)).getToppingName()).append(" Sundae with\n");
+            } else if (dessertItem instanceof Sundae) {
+                bill.append(((Sundae) dessertItem).getToppingName()).append(" Sundae with\n");
                 generateBillString(dessert, dessertCost, bill);
 
-            }  else if (dessertItems.get(j) instanceof Cookie){
-                bill.append(((Cookie) dessertItems.get(j)).getNumber()).append(" @ ").append(DessertShoppe.cents2dollarsAndCents(((Cookie) dessertItems.get(j)).getPricePerDozen())).append(" /dz\n");
+            } else if (dessertItem instanceof Cookie) {
+                bill.append(((Cookie) dessertItem).getNumber()).append(" @ ").append(DessertShoppe.cents2dollarsAndCents(((Cookie) dessertItem).getPricePerDozen())).append(" /dz\n");
                 generateBillString(dessert, dessertCost, bill);
             }
         }
