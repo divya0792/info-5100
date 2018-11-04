@@ -14,5 +14,6 @@ public class MedianFinderTest {
         MedianFinder medianFinder = new MedianFinder();
         double median = medianFinder.findMedianSortedArrays(A,B);
         Assert.assertEquals(4.0, median,0);
+
     }
 }

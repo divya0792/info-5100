@@ -2,40 +2,46 @@ package Question5;
 
 public class MedianFinder {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int i = 0;
-        int j = nums1.length - 1;
-        int k = 0;
-        int l = nums2.length - 1;
-        int total = nums1.length + nums2.length;
+        if (nums2.length < nums1.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
 
-        while (i + 1 < j && k + 1 < l) {
-            int middle1 = (i + j) / 2;
-            int middle2 = (k + l) / 2;
-            if (nums1[middle1] < nums2[middle2]) {
-                i = middle1;
-                l = middle2;
+        int m = nums1.length;
+        int n = nums2.length;
+        int low = 0;
+        int high = nums1.length;
+
+        while (low <= high) {
+
+            int firstPartition = (high + low) / 2;
+            int secondPartition = ((m + n + 1) / 2) - firstPartition;
+
+            int firstLeftMax = firstPartition <= 0 ? Integer.MIN_VALUE : nums1[firstPartition - 1];
+            int secondLeftMax = secondPartition <= 0 ? Integer.MIN_VALUE : nums2[secondPartition - 1];
+
+            int firstRightMin = firstPartition >= m ? Integer.MAX_VALUE : nums1[firstPartition];
+            int secondRightMin = secondPartition >= n ? Integer.MAX_VALUE : nums2[secondPartition];
+
+            int leftMax = Math.max(firstLeftMax, secondLeftMax);
+            int rightMin = Math.min(firstRightMin, secondRightMin);
+
+            if (leftMax <= rightMin) {
+                if ((m + n) % 2 == 0) {
+                    return (leftMax + rightMin) / 2.0;
+
+                } else {
+                    return leftMax;
+                }
+            } else if (firstLeftMax > secondRightMin) {
+                high = firstPartition - 1;
+
             } else {
-                j = middle1;
-                k = middle2;
+                low = firstPartition + 1;
             }
+
         }
-        if ((nums1.length + nums2.length) % 2 == 1) {
-            if (nums1[j] > nums2[l]) {
-                return nums2[l];
-            } else {
-                return nums1[j];
-            }
-        } else {
-            if (nums1[i] > nums2[l]) {
-                return (nums2[l] + nums2[k]) / 2.0;
-            } else if (nums1[j] < nums2[k]) {
-                return (nums1[i] + nums1[j]) / 2.0;
-            } else if (nums1[j] > nums2[k]) {
-                return (nums1[i] + nums2[k]) / 2.0;
-            } else {
-                return (nums1[j] + nums2[k]) / 2.0;
-            }
-        }
+        return -1;
 
     }
+
 }
