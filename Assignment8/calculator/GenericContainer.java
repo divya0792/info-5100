@@ -23,6 +23,7 @@ public class GenericContainer extends JFrame {
         for(Component component : components) {
             container.add(component);
         }
+        setVisible(true);
 
     }
 

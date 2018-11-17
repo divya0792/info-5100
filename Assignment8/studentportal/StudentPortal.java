@@ -29,11 +29,20 @@ public class StudentPortal {
 
         StudentTableModel model = new StudentTableModel(manager);
         JTable table = new JTable();
+
+        table.setFont(font);
+        table.setRowHeight(50);
         table.setModel(model);
+        table.setSize(500,500);
+        table.getColumnModel().getColumn(0).setMinWidth(100);
+        table.getColumnModel().getColumn(1).setMinWidth(100);
+        table.getColumnModel().getColumn(2).setMinWidth(100);
+        table.getColumnModel().getColumn(3).setMinWidth(100);
 
         JPanel formPanel = ComponentHelper.createPanel(components);
 
         JPanel tablePanel = ComponentHelper.createPanel(Collections.singleton(table));
+        tablePanel.setLayout(new FlowLayout());
 
         JButton button =
                 ComponentHelper.createButton("View Students", font, new DisplayListener(tablePanel, formPanel));
