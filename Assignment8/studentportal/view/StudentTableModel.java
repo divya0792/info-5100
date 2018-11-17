@@ -21,7 +21,11 @@ public class StudentTableModel extends DefaultTableModel {
 
     @Override
     public int getRowCount() {
-        return studentManager.getAllStudents().size();
+        if(studentManager == null) {
+            return 0;
+        } else {
+            return studentManager.getAllStudents().size();
+        }
     }
 
     @Override

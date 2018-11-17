@@ -3,6 +3,7 @@ package calculator.component;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.List;
 
 public class ComponentHelper {
@@ -20,7 +21,7 @@ public class ComponentHelper {
         return field;
     }
 
-    public static JPanel createPanel(List<Component> components) {
+    public static JPanel createPanel(Collection<Component> components) {
         JPanel panel = new JPanel();
         for(Component component : components) {
             panel.add(component);

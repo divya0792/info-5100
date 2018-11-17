@@ -14,7 +14,7 @@ public class SubmitListener implements ActionListener {
     private final Map<String, Component> components;
     private final StudentManager studentManager;
 
-    SubmitListener(Map<String, Component> components, StudentManager studentManager) {
+    public SubmitListener(Map<String, Component> components, StudentManager studentManager) {
         this.components = components;
         this.studentManager = studentManager;
     }
